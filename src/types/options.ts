@@ -339,6 +339,8 @@ export interface ParsedOptions {
   time_24hr: boolean;
   weekNumbers: boolean;
   wrap: boolean;
+  ROC_era_name?: string,
+  year_tw: boolean,
 }
 
 export const defaults: ParsedOptions = {
@@ -421,4 +423,6 @@ export const defaults: ParsedOptions = {
   time_24hr: false,
   weekNumbers: false,
   wrap: false,
+  ROC_era_name: "ROC",
+  year_tw: true,
 };

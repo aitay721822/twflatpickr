@@ -1056,7 +1056,11 @@ function FlatpickrInstance(
     );
     currentMonth.appendChild(monthElement);
     currentMonth.appendChild(yearInput);
-
+    if (self.config.year_tw && 'ROC_era_name' in self.l10n) {
+      let ROCTitle = createElement("span", "");
+      ROCTitle.innerHTML = self.l10n.ROC_era_name || "";
+      currentMonth.appendChild(ROCTitle);
+    }
     monthNavFragment.appendChild(currentMonth);
     container.appendChild(monthNavFragment);
 
@@ -1185,6 +1189,11 @@ function FlatpickrInstance(
     self.minuteElement.setAttribute("max", "59");
     self.minuteElement.setAttribute("maxlength", "2");
 
+    if (!self.config.allowInput) {
+        self.hourElement.setAttribute("readonly", "true");
+        self.minuteElement.setAttribute("readonly", "true");
+    }
+
     self.timeContainer.appendChild(hourInput);
     self.timeContainer.appendChild(separator);
     self.timeContainer.appendChild(minuteInput);
@@ -1213,6 +1222,10 @@ function FlatpickrInstance(
       self.secondElement.setAttribute("max", "59");
       self.secondElement.setAttribute("maxlength", "2");
 
+      if (!self.config.allowInput) {
+          self.secondElement.setAttribute("readonly", "true");
+      }
+
       self.timeContainer.appendChild(
         createElement("span", "flatpickr-time-separator", ":")
       );
@@ -1227,7 +1240,7 @@ function FlatpickrInstance(
         self.l10n.amPM[
           int(
             (self.latestSelectedDateObj
-              ? self.hourElement.value
+              ? Number(self.hourElement.value)
               : self.config.defaultHour) > 11
           )
         ]
@@ -2307,7 +2320,8 @@ function FlatpickrInstance(
 
     if (
       window.navigator.userAgent.indexOf("MSIE") !== -1 ||
-      navigator.msMaxTouchPoints !== undefined
+      // navigator.msMaxTouchPoints !== undefined
+      navigator.maxTouchPoints !== undefined
     ) {
       // hack - bugs in the way IE handles focus keeps the calendar open
       setTimeout(self.close, 0);
@@ -2794,7 +2808,10 @@ function FlatpickrInstance(
         self.monthsDropdownContainer.value = d.getMonth().toString();
       }
 
-      yearElement.value = d.getFullYear().toString();
+      if (self.config.year_tw)
+        yearElement.value = (d.getFullYear() - 1911).toString();
+      else
+        yearElement.value = d.getFullYear().toString();
     });
 
     self._hidePrevMonthArrow =

@@ -109,6 +109,7 @@ export type CustomLocale = {
       string
     ];
   };
+  ROC_era_name?: string
 };
 
 export type key =
