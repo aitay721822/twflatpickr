@@ -1055,12 +1055,12 @@ function FlatpickrInstance(
       "flatpickr-current-month"
     );
     currentMonth.appendChild(monthElement);
-    currentMonth.appendChild(yearInput);
     if (self.config.year_tw && 'ROC_era_name' in self.l10n) {
       let ROCTitle = createElement("span", "");
       ROCTitle.innerHTML = self.l10n.ROC_era_name || "";
       currentMonth.appendChild(ROCTitle);
     }
+    currentMonth.appendChild(yearInput);
     monthNavFragment.appendChild(currentMonth);
     container.appendChild(monthNavFragment);
 
